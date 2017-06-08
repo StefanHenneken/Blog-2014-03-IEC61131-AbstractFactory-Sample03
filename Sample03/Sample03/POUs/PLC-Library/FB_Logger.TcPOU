@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.0.24">
+  <POU Name="FB_Logger" Id="{f01e87a0-60ff-4302-b8a9-762e186f392e}">
+    <Declaration><![CDATA[FUNCTION_BLOCK PUBLIC FB_Logger
+VAR
+	ipLogger : ILogger;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="FB_init" Id="{05893e53-597a-40dd-b445-c3114e4890b2}">
+      <Declaration><![CDATA[METHOD FB_init : BOOL
+VAR_INPUT
+	bInitRetains       : BOOL; // if TRUE, the retain variables are initialized (warm start / cold start)
+	bInCopyCode        : BOOL;  // if TRUE, the instance afterwards gets moved into the copy code (online change)
+	refLoggerFactory   : REFERENCE TO FB_AbstractLoggerFactory;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF (__ISVALIDREF(refLoggerFactory)) THEN
+	ipLogger := refLoggerFactory.GetLogger();
+ELSE
+	ipLogger := 0;
+END_IF
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Write" Id="{34777f0c-26fa-45cc-9bc6-6bb5d033ffcd}">
+      <Declaration><![CDATA[METHOD PUBLIC Write : STRING
+VAR_INPUT
+	message 		 : STRING;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[Write := 'Error';
+IF (ipLogger <> 0) THEN
+	Write := ipLogger.Write(message);
+END_IF	
+]]></ST>
+      </Implementation>
+    </Method>
+    <ObjectProperties />
+  </POU>
+</TcPlcObject>

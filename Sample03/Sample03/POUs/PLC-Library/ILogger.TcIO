@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.0.24">
+  <Itf Name="ILogger" Id="{1ce2a87c-b691-40d6-88e3-c310f1f514e4}">
+    <Declaration><![CDATA[INTERFACE ILogger
+]]></Declaration>
+    <Method Name="Write" Id="{86cda17a-eaf2-4088-b678-172c29ab6cd9}">
+      <Declaration><![CDATA[METHOD Write : STRING
+VAR_INPUT
+	sMsg	: STRING;
+END_VAR
+]]></Declaration>
+    </Method>
+    <ObjectProperties />
+  </Itf>
+</TcPlcObject>

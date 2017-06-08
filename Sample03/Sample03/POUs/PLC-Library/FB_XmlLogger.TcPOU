@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.0.24">
+  <POU Name="FB_XmlLogger" Id="{723c9ffc-e38d-49bc-b062-716cfc1f7baf}">
+    <Declaration><![CDATA[{attribute 'enable_dynamic_creation'}
+FUNCTION_BLOCK INTERNAL FB_XmlLogger IMPLEMENTS ILogger
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="Write" Id="{2db2e170-93d8-4538-b6b2-a82a0d9d5c99}">
+      <Declaration><![CDATA[METHOD PUBLIC Write : STRING
+VAR_INPUT
+	sMsg	: string;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[Write := CONCAT('XmlLogger: ', sMsg);]]></ST>
+      </Implementation>
+    </Method>
+    <ObjectProperties />
+  </POU>
+</TcPlcObject>

@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.0.24">
+  <POU Name="MAIN" Id="{fd6e49ae-9c60-4ba4-ba01-45f20a4b6c2c}">
+    <Declaration><![CDATA[PROGRAM MAIN
+VAR
+    fbDatabaseLoggerFactory  : FB_DatabaseLoggerFactory('MyDatabase', 'User', 'Password');
+    refDatabaseLoggerFactory : REFERENCE TO FB_DatabaseLoggerFactory := fbDatabaseLoggerFactory;
+    fbLogger                 : FB_Logger(refDatabaseLoggerFactory);	
+    sRetMsg                  : STRING;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[sRetMsg := fbLogger.Write('Hello');
+]]></ST>
+    </Implementation>
+    <ObjectProperties />
+  </POU>
+</TcPlcObject>

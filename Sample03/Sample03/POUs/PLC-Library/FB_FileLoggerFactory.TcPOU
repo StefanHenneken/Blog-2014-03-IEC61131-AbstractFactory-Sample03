@@ -1,0 +1,78 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.0.24">
+  <POU Name="FB_FileLoggerFactory" Id="{6c34de4e-6993-406b-b9b6-e959962ed7d8}">
+    <Declaration><![CDATA[FUNCTION_BLOCK INTERNAL FB_FileLoggerFactory EXTENDS FB_AbstractLoggerFactory
+VAR
+	pTxtLogger  : POINTER TO FB_TxtLogger;
+	pCsvLogger  : POINTER TO FB_CsvLogger;
+	pXmlLogger  : POINTER TO FB_XmlLogger;
+    ipLogger    : ILogger := 0;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="FB_init" Id="{0ee8f0b8-750e-4f4c-b043-1cee083e73c4}">
+      <Declaration><![CDATA[METHOD FB_init : BOOL
+VAR_INPUT
+	bInitRetains : BOOL; // if TRUE, the retain variables are initialized (warm start / cold start)
+	bInCopyCode  : BOOL;  // if TRUE, the instance afterwards gets moved into the copy code (online change)
+	sFilename    : STRING;
+END_VAR
+VAR
+	sFilenameExtension : STRING;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[sFilenameExtension := F_ToLCase(RIGHT(sFilename, 3));
+IF (sFilenameExtension = 'txt') THEN
+    pTxtLogger := __NEW(FB_TxtLogger);
+    ipLogger := pTxtLogger^;
+ELSIF (sFilenameExtension = 'csv') THEN
+    pCsvLogger := __NEW(FB_CsvLogger);
+    ipLogger := pCsvLogger^;
+ELSIF (sFilenameExtension = 'xml') THEN
+    pXmlLogger := __NEW(FB_XmlLogger);
+    ipLogger := pXmlLogger^;
+ELSE
+    ipLogger := 0;
+END_IF
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="FB_exit" Id="{7b71b134-119f-44c2-b806-7a5637e3732e}">
+      <Declaration><![CDATA[METHOD FB_exit : BOOL
+VAR_INPUT
+	bInCopyCode : BOOL; // if TRUE, the exit method is called for exiting an instance that is copied afterwards (online change).
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF (pTxtLogger <> 0) THEN
+	__DELETE(pTxtLogger);
+	pTxtLogger := 0;
+END_IF
+
+IF (pCsvLogger <> 0) THEN
+	__DELETE(pCsvLogger);
+	pCsvLogger := 0;
+END_IF
+
+IF (pXmlLogger <> 0) THEN
+	__DELETE(pXmlLogger);
+	pXmlLogger := 0;
+END_IF
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="GetLogger" Id="{82b4dd42-1914-4ef4-801c-ef04df769d61}">
+      <Declaration><![CDATA[METHOD PUBLIC GetLogger : ILogger
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[GetLogger := ipLogger;
+]]></ST>
+      </Implementation>
+    </Method>
+    <ObjectProperties />
+  </POU>
+</TcPlcObject>

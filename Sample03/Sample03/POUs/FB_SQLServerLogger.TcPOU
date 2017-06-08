@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.0.24">
+  <POU Name="FB_SQLServerLogger" Id="{182f805a-1111-4214-be00-6e7a500a1623}">
+    <Declaration><![CDATA[{attribute 'enable_dynamic_creation'}
+FUNCTION_BLOCK INTERNAL FB_SQLServerLogger IMPLEMENTS ILogger
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="Write" Id="{cee6d0d4-852e-4ff4-b662-bbca5a63d315}">
+      <Declaration><![CDATA[METHOD PUBLIC Write : STRING
+VAR_INPUT
+	sMsg	: string;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[Write := CONCAT('DatabaseLogger: ', sMsg);]]></ST>
+      </Implementation>
+    </Method>
+    <ObjectProperties />
+  </POU>
+</TcPlcObject>

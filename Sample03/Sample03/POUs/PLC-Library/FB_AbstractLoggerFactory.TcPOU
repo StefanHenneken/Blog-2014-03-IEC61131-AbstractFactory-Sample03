@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.0.24">
+  <POU Name="FB_AbstractLoggerFactory" Id="{03cfff1e-2141-489d-a35f-4c2a1a94d4d9}">
+    <Declaration><![CDATA[FUNCTION_BLOCK public FB_AbstractLoggerFactory
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="GetLogger" Id="{36432c5d-7b99-47b1-85f8-5ffc6a59e86f}">
+      <Declaration><![CDATA[METHOD PUBLIC GetLogger : ILogger
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[;]]></ST>
+      </Implementation>
+    </Method>
+    <ObjectProperties />
+  </POU>
+</TcPlcObject>
